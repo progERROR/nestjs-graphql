@@ -5,7 +5,7 @@ import {
   UnprocessableEntityException,
 } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
-import { CreateUserDto } from '../users/dto/create-user.dto';
+import { UserRegistrationDto } from '../auth/dto/user-registration.dto';
 import { User } from '../users/entities/user.entity';
 
 @EntityRepository(User)
@@ -34,13 +34,13 @@ export class UserRepository extends Repository<User> {
     }
   }
 
-  public async createUser(createUserDto: CreateUserDto): Promise<void> {
+  public async createUser(createUserDto: UserRegistrationDto): Promise<User> {
     const user: User = new User();
     user.userName = createUserDto.userName;
     user.email = createUserDto.email;
     user.password = createUserDto.password;
     try {
-      await this.save(user);
+      return await this.save(user);
     } catch (e) {
       throw new UnprocessableEntityException(e.message);
     }

@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UsersModule } from './users/users.module';
 import * as joiconfig from './configs/envconfig';
 import * as ormconfig from './configs/ormconfig';
 
@@ -13,6 +14,7 @@ import * as ormconfig from './configs/ormconfig';
       ...joiconfig,
     }),
     TypeOrmModule.forRoot(ormconfig),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
